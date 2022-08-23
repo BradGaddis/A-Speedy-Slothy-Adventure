@@ -1,39 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     // component references 
     Rigidbody2D playerRb;
-    AudioSource audioSource;
     BoxCollider2D boxCollider2D;
     CheckWallCollision checkWallCollision;
+    PlayerAudioHandler playAudio;
 
 
     [SerializeField] float speed;  
     [SerializeField] float jumpForce;
     float dirCollided = 0;
     [SerializeField] LayerMask groundMask;
-    [SerializeField] AudioClip jumpSFX;
-    [SerializeField] AudioClip collideSFX;
+  
+    [SerializeField] ParticleSystem walkDust;
     float xInput;
     float yInput;
+    float lowerBound;
 
     private void Start() {
         playerRb = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
-        audioSource = GetComponent<AudioSource>();
         checkWallCollision = GetComponent<CheckWallCollision>();
+        playAudio = GetComponent<PlayerAudioHandler>();
+        
+        GameObject ground = GameObject.Find("Ground");
+        lowerBound = ground.GetComponent<CompositeCollider2D>().bounds.min.y;
+        Debug.Log(lowerBound);
     }
     private void Update() {
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Jump");
-    }  
-    void FixedUpdate()
-    {
         HandleMovement();
-        // check if we collided horizontally and play sfx
+        CheckLowerBounds();
     }
 
     void HandleMovement(){
@@ -42,26 +45,34 @@ public class PlayerController : MonoBehaviour
         xInput *= speed;
         yInput *= jumpForce;
 
+        playAudio.Run(IsGrounded(), (xInput != 0 && !checkWallCollision.isColliding));
+        
         if(xInput != 0) {
+            playerRb.velocity = new Vector2(0, playerRb.velocity.y);
             playerRb.velocity = new Vector2(xInput, playerRb.velocity.y);
+            
             if (checkWallCollision.isColliding)
             {
                 if(dirCollided == xInput) return;
-                audioSource.PlayOneShot(collideSFX);
-                dirCollided = xInput;
-            } else {
+                if(dirCollided != xInput)
+                    dirCollided = xInput;
+                playAudio.Collide();
+            } 
+            else {
                 dirCollided = 0;
+                walkDust.Play();
             }
         } else {
             playerRb.velocity = new Vector2(0, playerRb.velocity.y);
         } 
         if (yInput > 0 && IsGrounded()) {
+            walkDust.Stop();
             playerRb.velocity = new Vector2(playerRb.velocity.x, yInput);
-            audioSource.PlayOneShot(jumpSFX);
+            playAudio.Jump();
         } 
     }
 
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         float checkDist = .1f;
         Vector2 size = boxCollider2D.bounds.size;
@@ -69,5 +80,15 @@ public class PlayerController : MonoBehaviour
         return raycast2D.collider != null;
     }
 
+    void DeathReload(){
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name.ToString());
+    }
+
+    void CheckLowerBounds(){
+        if (transform.position.y <= lowerBound) {
+            DeathReload();
+        }
+    }
 
 }

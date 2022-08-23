@@ -26,19 +26,22 @@ public class CheckWallCollision : MonoBehaviour
     }
 
     bool CheckCollidedGeneric() {
+        float ckdist = .3f;
         if (rb.velocity.x == 0) 
             {
                 return false;
             }
-        Vector2 dir = new Vector2(transform.position.x * Mathf.Sign(rb.velocity.x),transform.position.y);
-        RaycastHit2D hit = Physics2D.BoxCast(collide2D.bounds.center,collide2D.bounds.extents - new Vector3(0, 0.3f), 0, dir, .3f * Mathf.Sign(rb.velocity.x));
+        // Vector2 dir = new Vector2(transform.position.x * Mathf.Sign(rb.velocity.x),transform.position.y);
+        Vector2 dir = new Vector3((transform.position.x + ckdist) , transform.position.y) - transform.position; 
+        // Debug.Log(dir);
+        RaycastHit2D hit = Physics2D.BoxCast(collide2D.bounds.center,collide2D.bounds.size, 0, dir, ckdist * Mathf.Sign(rb.velocity.x));
         if (!hit.collider) 
             {
+                // this bit was for debugging
                 return false;
             }
         objHit = hit.collider.gameObject;
-        bool output = hit.collider && hit.collider.gameObject.name != this.gameObject.name;
-        return output;
+        return hit.collider && hit.collider.gameObject.name != this.gameObject.name;
     }
 
 }
