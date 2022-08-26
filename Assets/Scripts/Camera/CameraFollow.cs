@@ -36,7 +36,6 @@ namespace CameraFollower
             //     FollowTargetCentered(target);
             //     Debug.Log(!IsAtSideBound(target));
             // }
-            Debug.Log(IsAtSideBound(target));
             if(IsAtSideBound(target))
             {
                 FollowVertical(target);

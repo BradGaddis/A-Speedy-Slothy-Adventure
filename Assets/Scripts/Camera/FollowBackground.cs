@@ -24,8 +24,15 @@ namespace CameraFollower
         // Update is called once per frame
         void Update()
         {
-            if(!cameraFollow.IsAtSideBound(target))
+            if(cameraFollow.IsAtSideBound(target))
+            {
+                FollowVertical(target);
+            } else if(cameraFollow.IsAtLowerBound(target)){
+                FollowHorizontal(target);
+            } 
+            else {
                 FollowTargetCentered(target);
+            }
         }
 
         void FollowTargetCentered(GameObject targetToFollow)
@@ -33,5 +40,15 @@ namespace CameraFollower
             backgroundObj.transform.position = targetToFollow.transform.position + offset;
         }
 
+        private void FollowHorizontal(GameObject targetToFollow){
+            Vector3 targetPos = targetToFollow.transform.position;
+            Vector3 updatedPos = targetPos + offset;
+            transform.position = new Vector3(updatedPos.x, Camera.main.transform.position.y, updatedPos.z);
+        }
+        private void FollowVertical(GameObject targetToFollow){
+            Vector3 targetPos = targetToFollow.transform.position;
+            Vector3 updatedPos = targetPos + offset;
+            transform.position = new Vector3(Camera.main.transform.position.x, updatedPos.y, updatedPos.z);
+        }
     }
 }
