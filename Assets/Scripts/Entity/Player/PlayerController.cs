@@ -5,6 +5,14 @@ using UnityEngine.SceneManagement;
 
 namespace Sloth.Player
 {
+    public enum PlayerMoveState {
+
+    }
+
+    public enum PlayerChargedState {
+        baseCharge,
+        energized
+    }
     public class PlayerController : MonoBehaviour
     {
         // component references 
@@ -12,6 +20,7 @@ namespace Sloth.Player
         BoxCollider2D boxCollider2D;
         CheckWallCollision checkWallCollision;
         PlayerAudioHandler playAudio;
+        PowerUp powerUp;
 
 
         [SerializeField] float speed;  
@@ -23,16 +32,20 @@ namespace Sloth.Player
         float xInput;
         float yInput;
         float lowerBound;
+        PlayerChargedState energyState;
 
         private void Start() {
             playerRb = GetComponent<Rigidbody2D>();
             boxCollider2D = GetComponent<BoxCollider2D>();
             checkWallCollision = GetComponent<CheckWallCollision>();
             playAudio = GetComponent<PlayerAudioHandler>();
+            powerUp = GetComponent<PowerUp>();
             
             GameObject ground = GameObject.Find("Ground");
             lowerBound = ground.GetComponent<CompositeCollider2D>().bounds.min.y;
-            Debug.Log(lowerBound);
+            // TODO GET THIS FROM CAMERA
+
+            energyState = PlayerChargedState.baseCharge;
         }
         private void Update() {
             xInput = Input.GetAxisRaw("Horizontal");
@@ -92,6 +105,30 @@ namespace Sloth.Player
                 DeathReload();
             }
         }
+        public PlayerChargedState GetEnergyState(){
+            return energyState;
+        }
+        public void SetChargedState(PlayerChargedState state) {
+            energyState = state;
+        }
+        public void ChangeStats(float newSpeed = 0, float newJump = 0) {
 
+            if(newSpeed != 0){
+                speed = newSpeed;
+            }
+            if(newJump != 0)
+            {
+                jumpForce = newJump; 
+            } 
+            else{
+                Debug.LogError("No attributes set");
+            }
+        }
+        public Dictionary<string, float> GetStats() {
+            Dictionary<string, float> output = new Dictionary<string, float>();
+            output.Add("speed", speed);
+            output.Add("jump", jumpForce);
+            return output;
+        }
     }
 }

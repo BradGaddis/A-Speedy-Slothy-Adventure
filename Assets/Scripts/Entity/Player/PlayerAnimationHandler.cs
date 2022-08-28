@@ -12,6 +12,8 @@ namespace Sloth.Player
         SpriteRenderer spriteRenderer;
         [SerializeField] float runAnimFR;
         Rigidbody2D rb;
+        Dictionary<string, float> stats;
+
 
         private void Start() {
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -22,6 +24,7 @@ namespace Sloth.Player
         void Update()
         {
             // Determine if we are even moving
+            stats = GetComponent<PlayerController>().GetStats();
             float xmoveDir = Input.GetAxisRaw("Horizontal");
             if (xmoveDir != 0) {
                 HandleRunning();
@@ -34,7 +37,7 @@ namespace Sloth.Player
         }
 
         void HandleRunning() {
-            int frame = (int)((Time.time + (Time.time * runAnimFR))  % runAnimationSprites.Count);
+            int frame = (int)((Time.time + (Time.time * Mathf.Abs(rb.velocity.x)))  % runAnimationSprites.Count);
             spriteRenderer.sprite = runAnimationSprites[frame]; 
         }
 

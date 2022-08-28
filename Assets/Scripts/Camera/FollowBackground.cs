@@ -22,7 +22,7 @@ namespace CameraFollower
         }
 
         // Update is called once per frame
-        void Update()
+        void LateUpdate()
         {
             if(cameraFollow.IsAtSideBound(target))
             {
@@ -37,18 +37,26 @@ namespace CameraFollower
 
         void FollowTargetCentered(GameObject targetToFollow)
         {
-            backgroundObj.transform.position = targetToFollow.transform.position + offset;
+            // backgroundObj.transform.position = targetToFollow.transform.position + offset;
+            backgroundObj.transform.position = Vector3.Lerp(backgroundObj.transform.position, targetToFollow.transform.position + offset, 1f);
+
         }
 
         private void FollowHorizontal(GameObject targetToFollow){
             Vector3 targetPos = targetToFollow.transform.position;
             Vector3 updatedPos = targetPos + offset;
-            transform.position = new Vector3(updatedPos.x, Camera.main.transform.position.y, updatedPos.z);
+            Vector3 newPos = new Vector3(updatedPos.x, transform.position.y, updatedPos.z);
+            backgroundObj.transform.position = Vector3.Lerp(backgroundObj.transform.position, newPos, 1f);
+            
+            // backgroundObj.transform.position = new Vector3(updatedPos.x, transform.position.y, updatedPos.z);
         }
         private void FollowVertical(GameObject targetToFollow){
             Vector3 targetPos = targetToFollow.transform.position;
             Vector3 updatedPos = targetPos + offset;
-            transform.position = new Vector3(Camera.main.transform.position.x, updatedPos.y, updatedPos.z);
+            Vector3 newPos = new Vector3(transform.position.x, updatedPos.y, updatedPos.z);
+            backgroundObj.transform.position = Vector3.Lerp(backgroundObj.transform.position, newPos, 1f);
+
+            // backgroundObj.transform.position = new Vector3(transform.position.x, updatedPos.y, updatedPos.z);
         }
     }
 }
