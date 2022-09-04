@@ -13594,6 +13594,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   walkDust: {fileID: 1103981917}
+  moveState: 0
 --- !u!50 &1901169137
 Rigidbody2D:
   serializedVersion: 4
@@ -13770,7 +13771,9 @@ MonoBehaviour:
   - {fileID: -420074925, guid: 94c7c0424b08e814d8512634b164f3f7, type: 3}
   - {fileID: -279617386, guid: 94c7c0424b08e814d8512634b164f3f7, type: 3}
   - {fileID: -1782882289, guid: 94c7c0424b08e814d8512634b164f3f7, type: 3}
-  idleAnimationSprites: []
+  idleAnimationSprites:
+  - {fileID: -1869932458, guid: 91912e943e1f070429e0bad370bca013, type: 3}
+  - {fileID: -1442594881, guid: 91912e943e1f070429e0bad370bca013, type: 3}
   runAnimFR: 10
 --- !u!114 &1901169142
 MonoBehaviour:

@@ -62,6 +62,10 @@ namespace Sloth.Player
             FlipSprite(xmoveDir);
         }
 
+        void HandleJump() {
+
+        }
+
         void FlipSprite(float dir) {
             if(dir > 0 && transform.localScale.x < 0)
             {
@@ -72,6 +76,7 @@ namespace Sloth.Player
                 transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y);
             } 
         }
+
 
         PlayerMoveState GetPlayerState() {
             PlayerMoveState state = playerController.GetPlayerState();
