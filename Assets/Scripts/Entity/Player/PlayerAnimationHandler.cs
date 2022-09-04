@@ -11,6 +11,7 @@ namespace Sloth.Player
         [SerializeField] List<Sprite> idleAnimationSprites;
         SpriteRenderer spriteRenderer;
         [SerializeField] float runAnimFR;
+        [SerializeField] float idleAnimFR;
         Rigidbody2D rb;
         // Dictionary<string, float> stats;
         PlayerController playerController;
@@ -50,7 +51,11 @@ namespace Sloth.Player
         }
 
         void HandleIdle() {
-            
+            if (xmoveDir == 0) {
+                int frame = (int)((Time.time + (Time.time * idleAnimFR)) % idleAnimationSprites.Count);
+                Debug.Log(frame);
+                spriteRenderer.sprite = idleAnimationSprites[frame];
+            }
         }
 
         void HandleRunning() {
@@ -80,7 +85,6 @@ namespace Sloth.Player
 
         PlayerMoveState GetPlayerState() {
             PlayerMoveState state = playerController.GetPlayerState();
-            Debug.Log(state);
             return state;
         }
     }

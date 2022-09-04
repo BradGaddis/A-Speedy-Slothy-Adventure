@@ -13775,6 +13775,7 @@ MonoBehaviour:
   - {fileID: -1869932458, guid: 91912e943e1f070429e0bad370bca013, type: 3}
   - {fileID: -1442594881, guid: 91912e943e1f070429e0bad370bca013, type: 3}
   runAnimFR: 10
+  idleAnimFR: 5
 --- !u!114 &1901169142
 MonoBehaviour:
   m_ObjectHideFlags: 0

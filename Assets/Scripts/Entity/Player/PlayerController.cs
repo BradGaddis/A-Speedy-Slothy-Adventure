@@ -87,13 +87,14 @@ namespace Sloth.Player
                     walkDust.Play();
                 }
             } else {
+                SetPlayerState(PlayerMoveState.idle);
                 playerRb.velocity = new Vector2(0, playerRb.velocity.y);
             } 
 
             // Player is jumping
             if (yInput > 0 && IsGrounded()) {
                 SetPlayerState(PlayerMoveState.jumping);
-                
+
                 walkDust.Stop();
                 playerRb.velocity = new Vector2(playerRb.velocity.x, yInput);
                 // playAudio.Jump();
