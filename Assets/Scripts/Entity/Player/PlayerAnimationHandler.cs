@@ -12,10 +12,12 @@ namespace Sloth.Player
         SpriteRenderer spriteRenderer;
         [SerializeField] float runAnimFR;
         Rigidbody2D rb;
-        Dictionary<string, float> stats;
-
+        // Dictionary<string, float> stats;
+        PlayerController playerController;
+        float xmoveDir;
 
         private void Start() {
+            playerController = GetComponent<PlayerController>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
         }
@@ -24,21 +26,40 @@ namespace Sloth.Player
         void Update()
         {
             // Determine if we are even moving
-            stats = GetComponent<PlayerController>().GetStats();
-            float xmoveDir = Input.GetAxisRaw("Horizontal");
-            if (xmoveDir != 0) {
+            // stats = GetComponent<PlayerController>().GetStats();
+            xmoveDir = Input.GetAxisRaw("Horizontal");
+            switch (GetPlayerState())
+            {
+                case PlayerMoveState.running:
                 HandleRunning();
-                FlipSprite(xmoveDir);
-            } 
+                break;
+
+                case PlayerMoveState.idle:
+                HandleIdle();
+                break;
+
+                case PlayerMoveState.jumping:
+                HandleJump();
+                break;
+
+                default:
+                HandleIdle();
+                break;
+            }
+            GetPlayerState();
         }
 
         void HandleIdle() {
-
+            
         }
 
         void HandleRunning() {
-            int frame = (int)((Time.time + (Time.time * Mathf.Abs(rb.velocity.x)))  % runAnimationSprites.Count);
-            spriteRenderer.sprite = runAnimationSprites[frame]; 
+            if (xmoveDir != 0) {
+                int frame = (int)((Time.time + (Time.time * Mathf.Abs(rb.velocity.x)))  % runAnimationSprites.Count);
+                spriteRenderer.sprite = runAnimationSprites[frame]; 
+            } 
+
+            FlipSprite(xmoveDir);
         }
 
         void FlipSprite(float dir) {
@@ -50,6 +71,12 @@ namespace Sloth.Player
             {
                 transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y);
             } 
+        }
+
+        PlayerMoveState GetPlayerState() {
+            PlayerMoveState state = playerController.GetPlayerState();
+            Debug.Log(state);
+            return state;
         }
     }
 }

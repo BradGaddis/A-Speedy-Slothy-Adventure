@@ -74,6 +74,7 @@ namespace Sloth.Player
                 if (checkWallCollision.isColliding)
                 {
                     SetPlayerState(PlayerMoveState.colliding);
+
                     if(dirCollided == xInput) return;
                     if(dirCollided != xInput)
                         dirCollided = xInput;
@@ -81,6 +82,7 @@ namespace Sloth.Player
                 } 
                 else {
                     SetPlayerState(PlayerMoveState.running);
+
                     dirCollided = 0;
                     walkDust.Play();
                 }
@@ -91,6 +93,7 @@ namespace Sloth.Player
             // Player is jumping
             if (yInput > 0 && IsGrounded()) {
                 SetPlayerState(PlayerMoveState.jumping);
+                
                 walkDust.Stop();
                 playerRb.velocity = new Vector2(playerRb.velocity.x, yInput);
                 // playAudio.Jump();
