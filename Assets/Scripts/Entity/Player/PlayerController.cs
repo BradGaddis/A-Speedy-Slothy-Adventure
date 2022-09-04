@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 namespace Sloth.Player
 {
     public enum PlayerMoveState {
-
+        idle,
+        running,
+        colliding,
+        jumping,
     }
 
     public enum PlayerChargedState {
@@ -33,6 +36,7 @@ namespace Sloth.Player
         float yInput;
         float lowerBound;
         PlayerChargedState energyState;
+        [SerializeField]PlayerMoveState moveState = PlayerMoveState.idle;
 
         private void Start() {
             playerRb = GetComponent<Rigidbody2D>();
@@ -54,36 +58,42 @@ namespace Sloth.Player
             CheckLowerBounds();
         }
 
-        void HandleMovement(){
+        void HandleMovement()
+        {
             Vector3 pos = transform.position;
-            
             xInput *= speed;
             yInput *= jumpForce;
 
             playAudio.Run(IsGrounded(), (xInput != 0 && !checkWallCollision.isColliding));
             
+            // Player is running
             if(xInput != 0) {
                 playerRb.velocity = new Vector2(0, playerRb.velocity.y);
                 playerRb.velocity = new Vector2(xInput, playerRb.velocity.y);
                 
                 if (checkWallCollision.isColliding)
                 {
+                    SetPlayerState(PlayerMoveState.colliding);
                     if(dirCollided == xInput) return;
                     if(dirCollided != xInput)
                         dirCollided = xInput;
-                    playAudio.Collide();
+                    // playAudio.Collide();
                 } 
                 else {
+                    SetPlayerState(PlayerMoveState.running);
                     dirCollided = 0;
                     walkDust.Play();
                 }
             } else {
                 playerRb.velocity = new Vector2(0, playerRb.velocity.y);
             } 
+
+            // Player is jumping
             if (yInput > 0 && IsGrounded()) {
+                SetPlayerState(PlayerMoveState.jumping);
                 walkDust.Stop();
                 playerRb.velocity = new Vector2(playerRb.velocity.x, yInput);
-                playAudio.Jump();
+                // playAudio.Jump();
             } 
         }
 
@@ -111,6 +121,16 @@ namespace Sloth.Player
         public void SetChargedState(PlayerChargedState state) {
             energyState = state;
         }
+
+        public PlayerMoveState GetPlayerState(){
+            return moveState;
+        }
+        
+        public void SetPlayerState(PlayerMoveState newState) {
+            moveState = newState;
+        }
+
+
         public void ChangeStats(float newSpeed = 0, float newJump = 0) {
 
             if(newSpeed != 0){
