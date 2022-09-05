@@ -7,8 +7,7 @@ public class HealthObj : ScriptableObject
 {
     [SerializeField]
     static float maxHealth = 100;
-    [SerializeField] 
-    float currentHealth = maxHealth;
+    public float currentHealth = maxHealth;
 
     public float GetCurrentHealth(){
         return currentHealth;

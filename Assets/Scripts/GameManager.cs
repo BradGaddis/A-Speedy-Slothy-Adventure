@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] PlayerHealth playerHealth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +17,9 @@ public class GameManager : MonoBehaviour
     {
         
     }
+    
+    public float GetPlayerHealth() {
+        return playerHealth.GetPlayerHealth();
+    }
+    
 }
