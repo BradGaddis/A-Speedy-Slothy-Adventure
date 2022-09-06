@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Sloth.Player;
+using Sloth.Entity.Player;
 using UnityEngine;
 
 public class EnergyDrink : PowerUp

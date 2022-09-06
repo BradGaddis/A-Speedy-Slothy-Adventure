@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Sloth.Player
+namespace Sloth.Entity.Player
 {
     public enum PlayerMoveState {
         idle,

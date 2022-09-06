@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Sloth.Player
+namespace Sloth.Entity.Player
 {
     public class PlayerAnimationHandler : MonoBehaviour
     {
@@ -53,7 +53,6 @@ namespace Sloth.Player
         void HandleIdle() {
             if (xmoveDir == 0) {
                 int frame = (int)((Time.time + (Time.time * idleAnimFR)) % idleAnimationSprites.Count);
-                Debug.Log(frame);
                 spriteRenderer.sprite = idleAnimationSprites[frame];
             }
         }

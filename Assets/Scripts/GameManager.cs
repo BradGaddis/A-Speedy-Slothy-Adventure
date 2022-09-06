@@ -21,5 +21,4 @@ public class GameManager : MonoBehaviour
     public float GetPlayerHealth() {
         return playerHealth.GetPlayerHealth();
     }
-    
-}
+ } 
