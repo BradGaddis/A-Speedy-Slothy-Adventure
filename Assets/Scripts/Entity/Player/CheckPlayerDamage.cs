@@ -5,17 +5,22 @@ using UnityEngine;
 namespace Sloth.Entity.Player {
     public class CheckPlayerDamage : MonoBehaviour
     {
-        private void OnCollisionEnter2D(Collision2D other) {
+        
+        private void OnTriggerEnter2D(Collider2D other) {
             // check if touch damage
-            
+            DamageZone zone; 
+
             if(other.gameObject.GetComponent<DamageZone>() != null)
                 {
                     Debug.Log(other.gameObject.name + " was hit");
-                }
-            else {
-                Debug.Log("This didn't work");
-            }
+                    
+                    zone = other.gameObject.GetComponent<DamageZone>();
+                    if(zone.HasTouchDamage())
+                    {
+                        zone.DealDamage(zone.GetTouchDamage());
+                    }
                 
+                }
         }
         
     }

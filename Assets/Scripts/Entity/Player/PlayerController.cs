@@ -103,10 +103,11 @@ namespace Sloth.Entity.Player
 
         public bool IsGrounded()
         {
-            float checkDist = .1f;
-            Vector2 size = boxCollider2D.bounds.size;
-            RaycastHit2D raycast2D = Physics2D.BoxCast(boxCollider2D.bounds.center, size ,0,Vector2.down, checkDist, groundMask);
-            return raycast2D.collider != null;
+            // float checkDist = .1f;
+            // Vector2 size = boxCollider2D.bounds.size;
+            // RaycastHit2D raycast2D = Physics2D.BoxCast(boxCollider2D.bounds.center, size ,0,Vector2.down, checkDist, groundMask);
+            // return raycast2D.collider != null;
+            return Physics2D.IsTouchingLayers(boxCollider2D,groundMask);
         }
 
         void DeathReload(){

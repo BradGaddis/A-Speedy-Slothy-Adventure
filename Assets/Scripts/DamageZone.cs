@@ -21,4 +21,13 @@ public class DamageZone : MonoBehaviour, iDamageable
 
     }
 
+    public bool HasTouchDamage() {
+        return this.hasTouchDamage;
+    }
+
+
+     public float GetTouchDamage() {
+        return this.touchDamage;
+    }
+
 }

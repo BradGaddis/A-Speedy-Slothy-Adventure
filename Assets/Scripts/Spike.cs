@@ -8,13 +8,5 @@ public class Spike : DamageZone
 
         health.currentHealth -= dmg;
     }
-    
-    public bool HasTouchDamage() {
-        return this.hasTouchDamage;
-    }
-
-    public float GetTouchDamage() {
-        return this.touchDamage;
-    }
-
+   
 }
