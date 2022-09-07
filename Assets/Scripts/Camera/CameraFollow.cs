@@ -31,11 +31,6 @@ namespace CameraFollower
             cameraHalfHeigth = Camera.main.orthographicSize;
             cameraWidth = aspectRatio * cameraHalfHeigth * 2;
 
-            // if(!IsAtLowerBound(target) && !IsAtSideBound(target))
-            // {
-            //     FollowTargetCentered(target);
-            //     Debug.Log(!IsAtSideBound(target));
-            // }
             if(IsAtSideBound(target))
             {
                 FollowVertical(target);
