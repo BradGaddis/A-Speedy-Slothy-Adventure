@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sloth.Entity.Player;
+
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] PlayerHealth playerHealth;
+    [SerializeField] GameObject Player;
+    
+    [SerializeField] PlayerMoveState playerMoveState;
 
     // Start is called before the first frame update
     void Start()
@@ -21,4 +26,6 @@ public class GameManager : MonoBehaviour
     public float GetPlayerHealth() {
         return playerHealth.GetPlayerHealth();
     }
+
+    // public PlayerMoveState GetPlayerMove
  } 

@@ -12,7 +12,10 @@ namespace CameraFollower
         Vector3 offset;
         public float lowerBound, leftBound, rightBound;
         float aspectRatio, cameraHalfHeigth, cameraWidth;
-        
+
+        [SerializeField]
+        float cameraSize = 3.75f;
+
         private void Start() {
             
         }
@@ -47,18 +50,18 @@ namespace CameraFollower
             Vector3 updatedPos = targetPos + offset;
             transform.position = new Vector3(updatedPos.x, Camera.main.transform.position.y, updatedPos.z);
         }
-        private void FollowVertical(GameObject targetToFollow){
+        private void FollowVertical(GameObject targetToFollow) {
             Vector3 targetPos = targetToFollow.transform.position;
             Vector3 updatedPos = targetPos + offset;
             transform.position = new Vector3(Camera.main.transform.position.x, updatedPos.y, updatedPos.z);
         }
 
-        private void FollowTargetCentered(GameObject targetToFollow)
+        private void FollowTargetCentered(GameObject targetToFollow, float size = 0)
         {
             Vector3 targetPos = targetToFollow.transform.position;
             Vector3 updatedPos = targetPos + offset;
             transform.position = updatedPos;
-        }
+            }
 
         public bool IsAtLowerBound(GameObject followTarget){
             if (followTarget.transform.position.y - cameraHalfHeigth <= lowerBound) {
@@ -71,7 +74,8 @@ namespace CameraFollower
             float testLeft = followTarget.transform.position.x - cameraWidth / 2;
             float testRight = followTarget.transform.position.x + cameraWidth / 2;
 
-            if (testLeft <= leftBound )
+            if (testLeft <=
+             leftBound )
             {
                 return true;
             } else if ( testRight >= rightBound) {
