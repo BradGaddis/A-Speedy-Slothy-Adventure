@@ -6,12 +6,14 @@ using UnityEngine;
 public class EnergyDrink : PowerUp
 {
     [SerializeField]
-    float speed,jump;
+    float speedBoost,jumpBoost;
+
     void PowerUpPlayer(Collider2D other){
         // give the player extra stats
         PlayerController player = other.gameObject.GetComponent<PlayerController>();
-        player.ChangeStats(speed,jump);
+        player.ChangeStats(speedBoost,jumpBoost);
     }
+    
     void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag == "Player")

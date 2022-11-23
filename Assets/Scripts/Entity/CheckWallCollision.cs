@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckWallCollision : MonoBehaviour
+public class PlayerWallCollision : MonoBehaviour
 {
     public bool isColliding = false;
     public GameObject objHit;
