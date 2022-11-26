@@ -9,9 +9,7 @@ public interface iDamageable {
 public class DamageZone : MonoBehaviour, iDamageable
 {
     [SerializeField]
-    protected HealthObj health;
 
-    [SerializeField]
     protected bool hasTouchDamage;
 
     [SerializeField]

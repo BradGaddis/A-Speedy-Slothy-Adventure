@@ -4,50 +4,50 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    // component references 
-    Rigidbody2D playerRb;
-    BoxCollider2D boxCollider2D;
+    // componenet references
+    Rigidbody2D rb;
+    [SerializeField] PlayerStats stats;
+    CheckPlayerCollision checkPlayerCollision;
+    float speed;
+    float jumpForce;
 
-    [SerializeField] 
-    // Player stats
-    PlayerStats playerStats;
-    float xInput;
-    float yInput;
-    LayerMask groundMask;
-    PlayerStateHandler playerStateHandler;
 
-    private void Start() {
-        playerRb = GetComponent<Rigidbody2D>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
-        playerStateHandler = GetComponent<PlayerStateHandler>();
+    // Start is called before the first frame update
+    void Start()
+    {
+        checkPlayerCollision = GetComponent<CheckPlayerCollision>();
+        rb = GetComponent<Rigidbody2D>(); 
     }
 
-    private void Update() {
-        Vector2 MoveDir = GetMovement();
-        if (MoveDir != Vector2.zero) {
-            HandleWalk(MoveDir);
+    // Update is called once per frame
+    void Update()
+    {
+        speed = stats.speed;
+        jumpForce = stats.jumpForce;
+
+        Vector2 movement = GetMovementVector();
+        HandleMovement(movement);
+        if(Input.GetButtonDown("Jump")){
+            HandleJump();
         }
-        if (Input.GetButtonDown("Jump")) {
-            Jump();
-        }
+    }
+    
+    Vector2 GetMovementVector()
+    {
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
+        return new Vector2(x, y);
     }
 
-    Vector2 GetMovement() {
-        xInput = Input.GetAxisRaw("Horizontal");
-        return new Vector2(xInput, yInput).normalized;
+    void HandleMovement(Vector2 movement)
+    {
+        rb.velocity = movement * speed;
     }
 
-    void HandleWalk(Vector2 MoveDir) {
-        playerRb.velocity = new Vector2(MoveDir.x * playerStats.speed, playerRb.velocity.y);
-    }
-
-    void Jump() {
-        playerRb.velocity = new Vector2(playerRb.velocity.x, playerStats.jumpForce);
-    }
-
-    bool IsGrounded() {
-        // Raycast from the center of the player to the bottom of the player
-        RaycastHit2D raycastHit2D = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, .1f, groundMask);
-        return raycastHit2D.collider != null;
+    void HandleJump()
+    {   
+        if(!checkPlayerCollision.IsGrounded()) return;
+        rb.AddForce(Vector2.up * jumpForce);
     }
 }
+
