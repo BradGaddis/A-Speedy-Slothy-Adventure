@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DebugUltil;
+
 
 public class PlayerInput : MonoBehaviour
 {
@@ -23,16 +25,20 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DebugUltil.DebugUltil.CheckComponents(this.gameObject);
         speed = stats.speed;
         jumpForce = stats.jumpForce;
 
         Vector2 movement = GetMovementVector();
         HandleMovement(movement);
-        if(Input.GetButtonDown("Jump")){
+        if (Input.GetButtonDown("Jump"))
+        {
             Jump();
         }
     }
+
     
+
     Vector2 GetMovementVector()
     {
         float x = Input.GetAxisRaw("Horizontal");
@@ -42,7 +48,8 @@ public class PlayerInput : MonoBehaviour
 
     void HandleMovement(Vector2 movement)
     {
-        rb.velocity = movement * speed;
+        // update velocity maintaining y velocitiy
+        rb.velocity = new Vector2(movement.x * speed, rb.velocity.y);
     }
 
     void Jump()

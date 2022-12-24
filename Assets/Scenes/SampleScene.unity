@@ -7006,7 +7006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundObj: {fileID: 0}
   target: {fileID: 1901169133}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 3.5, z: 0}
 --- !u!4 &705936957 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 402162561915030809, guid: 342d99a38f843d84f8c3c9279a8b71be, type: 3}
@@ -7243,7 +7243,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533931141}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7492,6 +7492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 88de7fdf54d55df419dd4437888c2c27, type: 2}
+  jumpForce: 0
 --- !u!114 &1901169156
 MonoBehaviour:
   m_ObjectHideFlags: 0

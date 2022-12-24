@@ -7,6 +7,7 @@ namespace CameraFollower
     public class FollowBackground : MonoBehaviour
     {
         [SerializeField] GameObject backgroundObj;
+        Vector2 bgoffset;
         [SerializeField] GameObject target;
         [SerializeField] Vector3 offset;
         CameraFollow cameraFollow;
@@ -37,9 +38,9 @@ namespace CameraFollower
 
         void FollowTargetCentered(GameObject targetToFollow)
         {
-            // backgroundObj.transform.position = targetToFollow.transform.position + offset;
-            backgroundObj.transform.position = Vector3.Lerp(backgroundObj.transform.position, targetToFollow.transform.position + offset, 1f);
-
+            Vector3 targetPos = targetToFollow.transform.position;
+            Vector3 updatedPos = targetPos + offset;
+            backgroundObj.transform.position = Vector3.Lerp(backgroundObj.transform.position, updatedPos, 1f);
         }
 
         private void FollowHorizontal(GameObject targetToFollow){
