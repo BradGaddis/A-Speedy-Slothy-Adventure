@@ -9,6 +9,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] PlayerStats stats;
     CheckPlayerCollision checkPlayerCollision;
     float speed;
+    [SerializeField]
     float jumpForce;
 
 
@@ -28,15 +29,15 @@ public class PlayerInput : MonoBehaviour
         Vector2 movement = GetMovementVector();
         HandleMovement(movement);
         if(Input.GetButtonDown("Jump")){
-            HandleJump();
+            Jump();
         }
     }
     
     Vector2 GetMovementVector()
     {
         float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
-        return new Vector2(x, y);
+        // float y = Input.GetAxisRaw("Vertical");
+        return new Vector2(x, 0);
     }
 
     void HandleMovement(Vector2 movement)
@@ -44,10 +45,13 @@ public class PlayerInput : MonoBehaviour
         rb.velocity = movement * speed;
     }
 
-    void HandleJump()
+    void Jump()
     {   
+
         if(!checkPlayerCollision.IsGrounded()) return;
-        rb.AddForce(Vector2.up * jumpForce);
+        
+        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
     }
 }
 

@@ -7504,6 +7504,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4c997f643b392c4d970c15ae7c1d571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  boxCollider: {fileID: 0}
 --- !u!1001 &402162561547219748
 PrefabInstance:
   m_ObjectHideFlags: 0
