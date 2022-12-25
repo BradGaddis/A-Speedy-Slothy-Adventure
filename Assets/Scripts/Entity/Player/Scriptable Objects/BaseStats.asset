@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BaseStats
   m_EditorClassIdentifier: 
   speed: 6
-  jumpForce: 20
+  jumpForce: 22.83
