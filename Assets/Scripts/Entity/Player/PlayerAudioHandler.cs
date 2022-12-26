@@ -27,26 +27,22 @@ public class PlayerAudioHandler : MonoBehaviour
     private void Start() {
         audioSource = GetComponent<AudioSource>();
     }
-
-   public IEnumerator PlayWalkSound(bool isWalking)
+    bool isPlayingWalkSound = false;
+   public void PlayWalkSound()
     {
-         // Check if the player is still walking
-        if (isWalking)
+        if (!isPlayingWalkSound)
         {
-            // If the player is not walking, stop the audio clip
-            audioSource.Stop();
-            yield return null;
+            StartCoroutine(PlayWalkSoundCoroutine());
         }
+    }
+
+    private IEnumerator PlayWalkSoundCoroutine()
+    {
+        isPlayingWalkSound = true;
         int rand = Random.Range(0, walkClips.Length);
         AudioClip clip = walkClips[rand];
-
         audioSource.PlayOneShot(clip);
-        Debug.Log("Playing walk sound");
-
         yield return new WaitForSeconds(clip.length);
-
-        // Call the function again after the clip finishes playing
-        StartCoroutine(PlayWalkSound(isWalking));
-}
-    
+        isPlayingWalkSound = false;
+    }
 }

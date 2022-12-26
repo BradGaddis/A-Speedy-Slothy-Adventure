@@ -7235,12 +7235,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09c2d64e53ff0746b1486cb8d4348a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpDuration: 0
+  powerUpDuration: 5
   powerUpValue: 0
   powerUpTimer: 0
   powerUpActive: 0
   powerUpExpired: 0
   thisType: 0
+  speedBoost: 10
+  jumpBoost: 10
+  healthBoost: 0
+  damageBoost: 0
 --- !u!1 &1533931141
 GameObject:
   m_ObjectHideFlags: 0
@@ -7515,6 +7519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 88de7fdf54d55df419dd4437888c2c27, type: 2}
+  prevStats: {fileID: 0}
   jumpForce: 0
 --- !u!114 &1901169156
 MonoBehaviour:
@@ -7577,6 +7582,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e147e40678384483f42eec086847f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1901169168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901169133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cbff0a57f7ca9844ac6b695b7d481cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkClips:
+  - {fileID: 8300000, guid: 4377ddcc71afed14c98c1a4251289a96, type: 3}
+  jumpClips: []
+  landClips: []
+  deathClips: []
+  attackClips: []
+  hurtClips: []
 --- !u!1001 &402162561547219748
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -53,6 +53,7 @@ public class PlayerAnimationHandler : MonoBehaviour
             default:
                 break;
         }
+        Debug.Log("Just checking to see if getting called here");
         if (playerInput.GetMovementVector().x != dirFacing)
         {
             // Remove Later
@@ -79,7 +80,7 @@ public class PlayerAnimationHandler : MonoBehaviour
             if (checkPlayerCollision.IsGrounded()) {
                 Animate(walkSprites, walkAnimationSpeed);
                 // Play walk sound
-                playerAudioHandler.PlayWalkSound(isWalking);
+                playerAudioHandler.PlayWalkSound();
             }
 
         }
