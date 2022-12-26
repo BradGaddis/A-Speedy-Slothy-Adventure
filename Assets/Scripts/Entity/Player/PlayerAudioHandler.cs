@@ -6,6 +6,7 @@ public class PlayerAudioHandler : MonoBehaviour
 {
     [SerializeField]
     AudioClip[] walkClips;
+    AudioClip currentWalkClip;
 
     [SerializeField]
     AudioClip[] jumpClips;
@@ -21,28 +22,73 @@ public class PlayerAudioHandler : MonoBehaviour
 
     [SerializeField]
     AudioClip[] hurtClips;
+    [SerializeField]
+    AudioClip[] runClips;
+    AudioClip currentRunClip;
 
+    bool isPlayingWalkSound = false;
+    bool isPlayingRunSound = false;
     AudioSource audioSource;
     
     private void Start() {
         audioSource = GetComponent<AudioSource>();
     }
-    bool isPlayingWalkSound = false;
-   public void PlayWalkSound()
+    public void PlayWalkSound()
     {
-        if (!isPlayingWalkSound)
+        if (!audioSource.isPlaying)
         {
-            StartCoroutine(PlayWalkSoundCoroutine());
+            int rand = Random.Range(0, walkClips.Length);
+            currentWalkClip = walkClips[rand];
+            audioSource.clip = currentWalkClip;
+            audioSource.Play();
         }
-    }
+}
+
 
     private IEnumerator PlayWalkSoundCoroutine()
     {
         isPlayingWalkSound = true;
         int rand = Random.Range(0, walkClips.Length);
-        AudioClip clip = walkClips[rand];
-        audioSource.PlayOneShot(clip);
-        yield return new WaitForSeconds(clip.length);
+        currentWalkClip = walkClips[rand];
+        audioSource.PlayOneShot(currentWalkClip);
+        yield return new WaitForSeconds(currentWalkClip.length);
         isPlayingWalkSound = false;
+    }
+
+    public void StopWalkSound()
+    {   
+        if (audioSource.isPlaying && audioSource.clip == currentWalkClip)
+        {
+            audioSource.Stop();
+        }
+    }
+
+    public void PlayRunSound()
+    {
+        if (!audioSource.isPlaying)
+        {
+            int rand = Random.Range(0, runClips.Length);
+            currentRunClip = runClips[rand];
+            audioSource.clip = currentRunClip;
+            audioSource.Play();
+        }
+    }
+
+    public void StopRunSound()
+    {
+        if (audioSource.isPlaying && audioSource.clip == currentRunClip)
+        {
+            audioSource.Stop();
+        }
+    }
+
+    private IEnumerator PlayRunSoundCoroutine()
+    {
+        isPlayingRunSound = true;
+        int rand = Random.Range(0, runClips.Length);
+        currentRunClip = runClips[rand];
+        audioSource.PlayOneShot(currentRunClip);
+        yield return new WaitForSeconds(currentRunClip.length);
+        isPlayingRunSound = false;
     }
 }

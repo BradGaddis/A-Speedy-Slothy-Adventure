@@ -7601,6 +7601,8 @@ MonoBehaviour:
   deathClips: []
   attackClips: []
   hurtClips: []
+  runClips:
+  - {fileID: 8300000, guid: 5f69f7f91951fb54ea313bd4a9af68c8, type: 3}
 --- !u!1001 &402162561547219748
 PrefabInstance:
   m_ObjectHideFlags: 0

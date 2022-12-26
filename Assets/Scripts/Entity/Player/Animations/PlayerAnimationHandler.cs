@@ -53,7 +53,7 @@ public class PlayerAnimationHandler : MonoBehaviour
             default:
                 break;
         }
-        Debug.Log("Just checking to see if getting called here");
+        // Check the player's horizontal movement direction
         if (playerInput.GetMovementVector().x != dirFacing)
         {
             // Remove Later
@@ -64,25 +64,36 @@ public class PlayerAnimationHandler : MonoBehaviour
     }
     private void HandleRunAnimation()
     {
-        if (playerInput.GetMovementVector().x != 0)
+        bool isRunning = Mathf.Abs(playerInput.GetMovementVector().x) > Mathf.Epsilon;
+        if (isRunning)
         {
-            if (checkPlayerCollision.IsGrounded()) Animate(runSprites, runAnimationSpeed);
-
-            
+            if (checkPlayerCollision.IsGrounded()) {
+                Animate(runSprites, runAnimationSpeed);
+                playerAudioHandler.PlayRunSound();
+                } else {
+                    playerAudioHandler.StopRunSound();
+                }
+        } else {
+            playerAudioHandler.StopRunSound();
         }
     }
 
     private void HandleWalkAnimation()
     {
-        bool isWalking = playerInput.GetMovementVector().x != 0;
+        bool isWalking = Mathf.Abs(playerInput.GetMovementVector().x) > Mathf.Epsilon;
         if (isWalking)
         {
             if (checkPlayerCollision.IsGrounded()) {
                 Animate(walkSprites, walkAnimationSpeed);
                 // Play walk sound
                 playerAudioHandler.PlayWalkSound();
+            } else {
+                // Stop walk sound
+                playerAudioHandler.StopWalkSound();
             }
-
+        } else {
+            // Stop walk sound
+            playerAudioHandler.StopWalkSound();
         }
     }
 
