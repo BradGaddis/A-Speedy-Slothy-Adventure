@@ -38,12 +38,10 @@ public class PlayerState : MonoBehaviour {
     }
 
     public PlayerStateType GetCurState() {
-        Debug.Log("Current State: " + currentState);
         return currentState;
     }
 
     public PlayerStateType GetPrevState() {
-        Debug.Log("Previous State: " + previousState);
         return previousState;
     }
 
