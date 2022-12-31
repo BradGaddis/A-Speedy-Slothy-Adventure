@@ -35,8 +35,7 @@ public class PlayerState : MonoBehaviour {
     }
 
     private void Update() {
-        Debug.Log("Current state: " + currentState);
-        Debug.Log("Previous state: " + previousState);
+        // Debug.Log("Current state: " + currentusState);
     }
 
     public void SetState(PlayerStateType newState) {

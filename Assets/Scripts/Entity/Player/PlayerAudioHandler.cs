@@ -125,7 +125,6 @@ public class PlayerAudioHandler : MonoBehaviour
 
     public void PlayJumpSound()
     {
-        Debug.Log("Playing jump sound " + isPlayingJumpSound);
         // check if playing
         if (isPlayingJumpSound)
         {

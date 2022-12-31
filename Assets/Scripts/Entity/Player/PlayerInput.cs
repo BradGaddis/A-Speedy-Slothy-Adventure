@@ -11,19 +11,18 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] PlayerStats stats;
     [SerializeField] PlayerStats prevStats;
     CheckPlayerCollision checkPlayerCollision;
-    PlayerState playerState;
+    Vector2 movement;
 
     float speed;
     [SerializeField]
     float jumpForce;
-
+    public bool didJump { get; private set;}
 
     // Start is called before the first frame update
     void Start()
     {
         checkPlayerCollision = GetComponent<CheckPlayerCollision>();
         rb = GetComponent<Rigidbody2D>(); 
-        playerState = GetComponent<PlayerState>();
     }
 
     // Update is called once per frame
@@ -34,7 +33,6 @@ public class PlayerInput : MonoBehaviour
         bool isGrounded = checkPlayerCollision.IsGrounded();
 
         Vector2 movement = GetMovementVector();
-        playerState.HandleStates(movement, isGrounded);
         HandleHorizontalMovement(movement);
         if (Input.GetButtonDown("Jump"))
         {
@@ -51,7 +49,6 @@ public class PlayerInput : MonoBehaviour
 
     void HandleHorizontalMovement(Vector2 movement)
     {
-        
         // update velocity maintaining y velocitiy
         rb.velocity = new Vector2(movement.x * speed, rb.velocity.y);
     }
@@ -62,7 +59,6 @@ public class PlayerInput : MonoBehaviour
         if(!checkPlayerCollision.IsGrounded()) return;
         
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-
     }
 }
 
