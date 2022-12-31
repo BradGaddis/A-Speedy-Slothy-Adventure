@@ -55,17 +55,18 @@ public class PlayerState : MonoBehaviour {
         this.isPoweredUp = isPoweredUp;
     }
 
-
-    public void HandleStates(Vector2 movement, bool isGrounded) {
+    // This code is ugly as hell and I'm sorry. I'll fix it later
+    public void HandleStates(Vector2 movement, bool isFalling, bool isGrounded) {
         // Update state if player is jumping or falling
-        if (!isGrounded)
+        Debug.Log("Current state: " + CurrentState);
+        if (isFalling)
+        {
+            SetState(PlayerStateType.Fall);
+        }
+        else if (!isGrounded)
         {
             SetState(PlayerStateType.Jump);
         }
-        // else if (CurrentState == PlayerStateType.Jump)
-        // {
-        //     SetState(PlayerStateType.Fall);
-        // }
         else
         {
             // Update state if player is moving

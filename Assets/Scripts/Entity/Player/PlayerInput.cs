@@ -17,6 +17,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField]
     float jumpForce;
     public bool didJump { get; private set;}
+    public bool isFalling { get; private set;}
 
     // Start is called before the first frame update
     void Start()
@@ -27,16 +28,24 @@ public class PlayerInput : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        DebugUltil.DebugUltil.CheckComponents(this.gameObject);
         speed = stats.speed;
         jumpForce = stats.jumpForce;
         bool isGrounded = checkPlayerCollision.IsGrounded();
 
         Vector2 movement = GetMovementVector();
         HandleHorizontalMovement(movement);
+
         if (Input.GetButtonDown("Jump"))
         {
             Jump();
+        }
+
+        // Check if player is falling
+        if (rb.velocity.y < 0) {
+            didJump = false;
+            isFalling = true;
+        } else {
+            isFalling = false;
         }
     }
 
@@ -55,9 +64,8 @@ public class PlayerInput : MonoBehaviour
 
     void Jump()
     {   
-
         if(!checkPlayerCollision.IsGrounded()) return;
-        
+        didJump = true;
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 }

@@ -25,6 +25,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         movement = PlayerInput.GetMovementVector();
-        playerState.HandleStates(movement, CheckPlayerCollision.IsGrounded());
+        playerState.HandleStates(movement, PlayerInput.isFalling , CheckPlayerCollision.IsGrounded());
     }
 }
