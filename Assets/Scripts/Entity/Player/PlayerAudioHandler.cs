@@ -10,6 +10,7 @@ public class PlayerAudioHandler : MonoBehaviour
 
     [SerializeField]
     AudioClip[] jumpClips;
+    AudioClip currentJumpClip;
 
     [SerializeField]
     AudioClip[] landClips;
@@ -77,6 +78,25 @@ public class PlayerAudioHandler : MonoBehaviour
     public void StopRunSound()
     {
         if (audioSource.isPlaying && audioSource.clip == currentRunClip)
+        {
+            audioSource.Stop();
+        }
+    }
+
+    public void PlayJumpSound()
+    {
+        // Stop running and walking sounds
+        StopRunSound();
+        StopWalkSound();
+
+        int rand = Random.Range(0, jumpClips.Length);
+        currentJumpClip = jumpClips[rand];
+        audioSource.PlayOneShot(currentJumpClip);
+    }
+
+    public void StopJumpSound()
+    {
+        if (audioSource.isPlaying && audioSource.clip == currentJumpClip)
         {
             audioSource.Stop();
         }

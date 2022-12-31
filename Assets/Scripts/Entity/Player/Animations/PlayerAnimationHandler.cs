@@ -48,7 +48,7 @@ public class PlayerAnimationHandler : MonoBehaviour
                 HandleRunAnimation();
                 break;
             case PlayerStateType.Jump:
-                // Do nothing
+                HandleJumpAnimation();
                 break;
             default:
                 break;
@@ -94,6 +94,19 @@ public class PlayerAnimationHandler : MonoBehaviour
         } else {
             // Stop walk sound
             playerAudioHandler.StopWalkSound();
+        }
+    }
+
+    private void HandleJumpAnimation()
+    {
+        bool isJumping = playerStateType == PlayerStateType.Jump;
+        if (isJumping)
+        {
+            // Animate(jumpSprites, jumpAnimationSpeed);
+            playerAudioHandler.PlayJumpSound();
+        } else {
+            // Stop walk sound
+            playerAudioHandler.StopJumpSound();
         }
     }
 

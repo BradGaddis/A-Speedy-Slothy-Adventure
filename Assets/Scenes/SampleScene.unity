@@ -7596,7 +7596,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkClips:
   - {fileID: 8300000, guid: 4377ddcc71afed14c98c1a4251289a96, type: 3}
-  jumpClips: []
+  jumpClips:
+  - {fileID: 8300000, guid: 2e919f896e19e004da535631685125f1, type: 3}
   landClips: []
   deathClips: []
   attackClips: []
