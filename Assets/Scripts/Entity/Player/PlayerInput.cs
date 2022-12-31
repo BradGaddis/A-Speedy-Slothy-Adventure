@@ -31,41 +31,16 @@ public class PlayerInput : MonoBehaviour
         DebugUltil.DebugUltil.CheckComponents(this.gameObject);
         speed = stats.speed;
         jumpForce = stats.jumpForce;
+        bool isGrounded = checkPlayerCollision.IsGrounded();
 
         Vector2 movement = GetMovementVector();
-        HandleStates(movement);
+        playerState.HandleStates(movement, isGrounded);
         HandleHorizontalMovement(movement);
         if (Input.GetButtonDown("Jump"))
         {
             Jump();
         }
     }
-
-    void HandleStates(Vector2 movement) {
-        // Update state if player is jumping or falling
-        if (!checkPlayerCollision.IsGrounded())
-        {
-            playerState.SetState(PlayerStateType.Jump);
-        }
-        else if (playerState.GetCurState() == PlayerStateType.Jump)
-        {
-            playerState.SetState(PlayerStateType.Fall);
-        }
-        else
-        {
-            // Update state if player is moving
-            if (movement.x != 0)
-            {
-                if (playerState.GetPoweredUp()) playerState.SetState(PlayerStateType.Run); // TODO this should be whatever state the powerup is in
-                else playerState.SetState(PlayerStateType.Walk);
-            }
-            else
-            {
-                playerState.SetState(playerState.GetPrevState());
-            }
-        }
-    }
-
 
     public Vector2 GetMovementVector()
     {

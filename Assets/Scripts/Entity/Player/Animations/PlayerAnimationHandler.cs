@@ -69,13 +69,9 @@ public class PlayerAnimationHandler : MonoBehaviour
         {
             if (checkPlayerCollision.IsGrounded()) {
                 Animate(runSprites, runAnimationSpeed);
-                playerAudioHandler.PlayRunSound();
                 } else {
-                    playerAudioHandler.StopRunSound();
                 }
-        } else {
-            playerAudioHandler.StopRunSound();
-        }
+        } 
     }
 
     private void HandleWalkAnimation()
@@ -86,15 +82,8 @@ public class PlayerAnimationHandler : MonoBehaviour
             if (checkPlayerCollision.IsGrounded()) {
                 Animate(walkSprites, walkAnimationSpeed);
                 // Play walk sound
-                playerAudioHandler.PlayWalkSound();
-            } else {
-                // Stop walk sound
-                playerAudioHandler.StopWalkSound();
-            }
-        } else {
-            // Stop walk sound
-            playerAudioHandler.StopWalkSound();
-        }
+            } 
+        } 
     }
 
     private void HandleJumpAnimation()
@@ -103,11 +92,7 @@ public class PlayerAnimationHandler : MonoBehaviour
         if (isJumping)
         {
             // Animate(jumpSprites, jumpAnimationSpeed);
-            playerAudioHandler.PlayJumpSound();
-        } else {
-            // Stop walk sound
-            playerAudioHandler.StopJumpSound();
-        }
+        } 
     }
 
     // Updates the sprite renderers sprite to the next sprite in the list

@@ -26,16 +26,60 @@ public class PlayerAudioHandler : MonoBehaviour
     [SerializeField]
     AudioClip[] runClips;
     AudioClip currentRunClip;
+    AudioSource audioSource;
+
+    // component references
+    PlayerState playerState;
+
+
+    // check if jump is playing
+    bool isPlayingJumpSound = false;
 
     bool isPlayingWalkSound = false;
     bool isPlayingRunSound = false;
-    AudioSource audioSource;
     
     private void Start() {
         audioSource = GetComponent<AudioSource>();
+        playerState = GetComponent<PlayerState>();
     }
-    public void PlayWalkSound()
+
+    private void Update() {
+        // check if player is in walking state
+        if (playerState.CurrentState == PlayerStateType.Walk)
+        {
+            PlayWalkSound();
+        }
+        else
+        {
+            StopWalkSound();
+        }
+
+        // check if player is in running state
+        if (playerState.CurrentState == PlayerStateType.Run)
+        {
+            PlayRunSound();
+        }
+        else
+        {
+            StopRunSound();
+        }
+
+        // check if player is in jumping state
+        if (playerState.CurrentState == PlayerStateType.Jump)
+        {
+            PlayJumpSound();
+        } else{
+            isPlayingJumpSound = false;
+        }
+
+    }
+
+    private void PlayWalkSound()
     {
+        
+        if (isPlayingWalkSound){
+            return;
+        }
         if (!audioSource.isPlaying)
         {
             int rand = Random.Range(0, walkClips.Length);
@@ -43,29 +87,17 @@ public class PlayerAudioHandler : MonoBehaviour
             audioSource.clip = currentWalkClip;
             audioSource.Play();
         }
-}
-
-
-    private IEnumerator PlayWalkSoundCoroutine()
-    {
-        isPlayingWalkSound = true;
-        int rand = Random.Range(0, walkClips.Length);
-        currentWalkClip = walkClips[rand];
-        audioSource.PlayOneShot(currentWalkClip);
-        yield return new WaitForSeconds(currentWalkClip.length);
-        isPlayingWalkSound = false;
     }
+    
 
-    public void StopWalkSound()
-    {   
-        if (audioSource.isPlaying && audioSource.clip == currentWalkClip)
+
+    private void PlayRunSound()
+    {
+        if (isPlayingRunSound)
         {
-            audioSource.Stop();
+            return;
         }
-    }
 
-    public void PlayRunSound()
-    {
         if (!audioSource.isPlaying)
         {
             int rand = Random.Range(0, runClips.Length);
@@ -75,7 +107,15 @@ public class PlayerAudioHandler : MonoBehaviour
         }
     }
 
-    public void StopRunSound()
+    private void StopWalkSound()
+    {
+        if (audioSource.isPlaying && audioSource.clip == currentWalkClip)
+        {
+            audioSource.Stop();
+        }
+    }
+
+    private void StopRunSound()
     {
         if (audioSource.isPlaying && audioSource.clip == currentRunClip)
         {
@@ -85,14 +125,28 @@ public class PlayerAudioHandler : MonoBehaviour
 
     public void PlayJumpSound()
     {
+        Debug.Log("Playing jump sound " + isPlayingJumpSound);
+        // check if playing
+        if (isPlayingJumpSound)
+        {
+            return;
+        } 
+        isPlayingJumpSound = true;
         // Stop running and walking sounds
-        StopRunSound();
-        StopWalkSound();
-
+        if (audioSource.isPlaying)
+        {
+                StopRunSound();
+                StopWalkSound();
+        }
         int rand = Random.Range(0, jumpClips.Length);
         currentJumpClip = jumpClips[rand];
+
+        audioSource.clip = currentJumpClip;
+
         audioSource.PlayOneShot(currentJumpClip);
+        
     }
+
 
     public void StopJumpSound()
     {

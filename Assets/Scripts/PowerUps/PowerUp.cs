@@ -80,7 +80,7 @@ public class PowerUp : MonoBehaviour
         Debug.Log("Powerup timer started");
         powerUpActive = false;
         yield return new WaitForSeconds(powerUpDuration);
-        Debug.Log("Powerup timer ended");
+        // Debug.Log("Powerup timer ended");
         playerState.SetPoweredUp(false);
         powerUpExpired = true;
         Destroy(this.gameObject);

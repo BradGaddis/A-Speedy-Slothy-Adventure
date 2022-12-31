@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerStateType
+public enum PlayerStateType 
 {
     Idle,
     Walk,
@@ -19,17 +19,24 @@ public enum PlayerStateType
 }
 
 public class PlayerState : MonoBehaviour {
-    private PlayerStateType currentState;
-    private PlayerStateType previousState;
-    public PlayerStateType CurrentState { get => currentState; set => currentState = value; }
+    private PlayerStateType currentState = PlayerStateType.Idle;
+    private PlayerStateType previousState = PlayerStateType.Idle;
+    public PlayerStateType CurrentState { get => currentState; }
     public PlayerStateType PreviousState { get => previousState; }
+
+    float waitTilIdle;
+    [SerializeField]
+    float idleWaitTime = 1f;
 
     bool isPoweredUp;
 
     private void Start() {
-        currentState = PlayerStateType.Idle;
-        previousState = PlayerStateType.Idle;
-        isPoweredUp = false;
+        waitTilIdle = Time.time + idleWaitTime;
+    }
+
+    private void Update() {
+        Debug.Log("Current state: " + currentState);
+        Debug.Log("Previous state: " + previousState);
     }
 
     public void SetState(PlayerStateType newState) {
@@ -38,18 +45,51 @@ public class PlayerState : MonoBehaviour {
     }
 
     public PlayerStateType GetCurState() {
-        return currentState;
+        return CurrentState;
     }
 
     public PlayerStateType GetPrevState() {
-        return previousState;
+        return PreviousState;
     }
 
     public void SetPoweredUp(bool isPoweredUp) {
         this.isPoweredUp = isPoweredUp;
     }
 
-    public bool GetPoweredUp() {
-        return isPoweredUp;
+
+    public void HandleStates(Vector2 movement, bool isGrounded) {
+        // Update state if player is jumping or falling
+        if (!isGrounded)
+        {
+            SetState(PlayerStateType.Jump);
+        }
+        // else if (CurrentState == PlayerStateType.Jump)
+        // {
+        //     SetState(PlayerStateType.Fall);
+        // }
+        else
+        {
+            // Update state if player is moving
+            if (movement.x != 0)
+            {
+                if (isPoweredUp)
+                {
+                    SetState(PlayerStateType.Run);
+                }
+                else
+                {
+                    SetState(PlayerStateType.Walk);
+                }
+            }
+            else
+            {
+                // wait some time, then set back to idle
+                if (Time.time >= waitTilIdle)
+                {
+                    SetState(PlayerStateType.Idle);
+                    waitTilIdle = Time.time + idleWaitTime;
+                } 
+            }
+        }
     }
 }

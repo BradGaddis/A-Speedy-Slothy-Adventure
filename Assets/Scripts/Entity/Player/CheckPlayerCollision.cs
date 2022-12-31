@@ -12,6 +12,7 @@ public class CheckPlayerCollision : MonoBehaviour {
     void Start() {
         boxCollider = GetComponent<BoxCollider2D>();
     }
+    
 
     // Draw a box in the editor to show the size of the boxcast
     void OnDrawGizmosSelected() {
@@ -35,7 +36,7 @@ public class CheckPlayerCollision : MonoBehaviour {
             groundLayer
         );
         
-        Debug.Log("IsGrounded. Hitting:  " + hit.collider);
+        // Debug.Log("IsGrounded. Hitting:  " + hit.collider);
         return hit.collider != null;
     }
 
