@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,9 @@ public class PowerUp : MonoBehaviour
     public float powerUpTimer;
     public bool powerUpActive;
     public bool powerUpExpired;
+    public float oscillationSpeed;
+    public float oscillationAmp;
+
 
     // Get the player's current state
     PlayerState playerState;
@@ -33,6 +37,16 @@ public class PowerUp : MonoBehaviour
     protected float healthBoost;
     [SerializeField]
     protected float damageBoost;
+
+    private void Update() {
+        Oscillate();
+    }
+
+    private void Oscillate()
+    {
+        // oscillate up and down
+        transform.position = new Vector3(transform.position.x, transform.position.y + Mathf.Sin(Time.time * oscillationSpeed) * oscillationAmp, transform.position.z);
+    }
 
 
 

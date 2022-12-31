@@ -16,6 +16,9 @@ public class PlayerInput : MonoBehaviour
     float speed;
     [SerializeField]
     float jumpForce;
+    [SerializeField]
+    float jumpCoolDown = 0.5f;
+    float jumpTimer;
     public bool didJump { get; private set;}
     public bool isFalling { get; private set;}
 
@@ -24,6 +27,7 @@ public class PlayerInput : MonoBehaviour
     {
         checkPlayerCollision = GetComponent<CheckPlayerCollision>();
         rb = GetComponent<Rigidbody2D>(); 
+        jumpTimer = jumpCoolDown;
     }
 
     // Update is called once per frame
@@ -35,10 +39,15 @@ public class PlayerInput : MonoBehaviour
         Vector2 movement = GetMovementVector();
         HandleHorizontalMovement(movement);
 
+        // if gounded, start timer, then allow jump
+        
+        jumpCoolDown -= Time.deltaTime;
         if (Input.GetButtonDown("Jump"))
         {
-            Jump();
+            Jump(isGrounded);
         }
+
+
 
         // Check if player is falling
         if (rb.velocity.y < 0) {
@@ -62,9 +71,11 @@ public class PlayerInput : MonoBehaviour
         rb.velocity = new Vector2(movement.x * speed, rb.velocity.y);
     }
 
-    void Jump()
+    void Jump(bool isGrounded)
     {   
-        if(!checkPlayerCollision.IsGrounded()) return;
+        if (jumpCoolDown > 0) return;
+        jumpCoolDown = jumpTimer;
+        if(!isGrounded ) return;
         didJump = true;
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }

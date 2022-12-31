@@ -5076,6 +5076,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 88de7fdf54d55df419dd4437888c2c27, type: 2}
   prevStats: {fileID: 0}
   jumpForce: 0
+  jumpCoolDown: 0
 --- !u!114 &1901169156
 MonoBehaviour:
   m_ObjectHideFlags: 0

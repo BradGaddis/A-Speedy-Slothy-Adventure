@@ -56,14 +56,14 @@ public class PlayerState : MonoBehaviour {
     }
 
     // This code is ugly as hell and I'm sorry. I'll fix it later
-    public void HandleStates(Vector2 movement, bool isFalling, bool isGrounded) {
+    public void HandleStates(Vector2 movement, bool isFalling, bool didJump, bool isGrounded) {
         // Update state if player is jumping or falling
         Debug.Log("Current state: " + CurrentState);
         if (isFalling)
         {
             SetState(PlayerStateType.Fall);
         }
-        else if (!isGrounded)
+        else if (!isGrounded && didJump)
         {
             SetState(PlayerStateType.Jump);
         }
